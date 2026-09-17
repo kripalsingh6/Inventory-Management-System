@@ -1,5 +1,5 @@
-import Product from "../model/product";
-import Transaction from "../model/Transaction";
+import Product from "../model/product.js";
+import Transaction from "../model/Transaction.js";
 
 // post new product 
 
@@ -39,7 +39,7 @@ export const purchaseProduct = async(req,res)=>{
         const {productId , quantity} = req.body;
 
         if(!productId || quantity <= 0){
-             res.status(400).json({
+            return res.status(400).json({
             error: 'purchase quantity must be greater then zero'
         })
         };
@@ -47,7 +47,7 @@ export const purchaseProduct = async(req,res)=>{
          const product = await Product.findById(productId);
 
         if(!product){
-            res.status(404).json({
+            return res.status(404).json({
             error: 'product not found '
         })
         }
@@ -86,19 +86,19 @@ export const restockProduct = async(req,res)=>{
          const {productId , quantity} = req.body;
 
           if(!quantity || quantity <= 0){
-             res.status(400).json({
+            return res.status(400).json({
             error: 'restock quantity must be greater then zero'
         })
         };
           const product = await Product.findById(productId);
             if(!product){
-            res.status(404).json({
+            return res.status(404).json({
             error: 'product not found '
         })
-
-         product.availableStock += quantity;
+    }
+    product.availableStock += quantity;
         await product.save();
-
+ 
           const transaction = new Transaction({
             productId ,
             transactionType: 'restock',
@@ -111,7 +111,6 @@ export const restockProduct = async(req,res)=>{
             transaction, 
             product
         })
-    }
     }catch(error){
         res.status(400).json({
             error: error.message

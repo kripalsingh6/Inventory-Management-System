@@ -9,7 +9,7 @@ const transactionSchema = new mongoose.Schema({
     transactionType:{
         type : String,
         enum : {
-            values:['Purchase','Restock'],
+            values:['purchase','restock'],
             message:'valid transaction type'
         },
         required:[true , 'transaction type is required ']

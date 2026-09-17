@@ -1,6 +1,6 @@
 
 import express from "express";
-import connectMongDb from "./config/model.config";
+import connectMongDb from "./config/model.config.js";
 import 'dotenv/config';
 
 import productRoutes from './routes/products.route.js';
@@ -17,6 +17,6 @@ app.use('/products',productRoutes);
 app.get("/" , (req,res)=>{
     res.send("server is starting");
 })
-app.listen(port,(req,res)=>{
+app.listen(port,()=>{
     console.log(`port is listening ${port}`)
 })
